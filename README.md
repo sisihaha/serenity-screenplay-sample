@@ -1,6 +1,6 @@
 # Sample Project for Serenity Screenplay
 
-This project is a simple demonstration showing test automation using Serenity Screenplay.
+This project is a simple demonstration showing test automation for Web Application and RESTful API using Serenity Screenplay.
 
 ## Running the project
 
