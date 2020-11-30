@@ -32,3 +32,17 @@ Feature: Sample for RESTful API
     Then I should see the following comment information
       | PostId | Id | Name                         | Email              | Body                                                                                                                                                    |
       |      1 |  1 | id labore ex et quam laborum | Eliseo@gardner.biz | laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium |
+
+  Scenario: Post comment
+    When I request to post the following comment
+      """
+      {
+      "name": "James",
+      "email": "james@dummy.email.com",
+      "body": "say hello"
+      }
+      """
+    Then I should see the following information in the response
+      | Name  | Email                 | Body      |
+      | James | james@dummy.email.com | say hello |
+    And I should see id greater than 0 in the response

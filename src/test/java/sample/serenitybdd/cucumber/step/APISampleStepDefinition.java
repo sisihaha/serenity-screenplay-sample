@@ -4,6 +4,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
+import static org.hamcrest.Matchers.*;
 
 import org.junit.Assert;
 
@@ -43,8 +44,32 @@ public class APISampleStepDefinition {
 	
 	@Then("I should see the following comment information")
 	public void i_should_see_the_following_comment_information(CommentInformation comment) {
-		theActorInTheSpotlight().should(seeThatResponse("JSON data conforms to JSON schema", response -> {
+		theActorInTheSpotlight().should(seeThatResponse("JSON data is same as the one expected", response -> {
 			Assert.assertEquals(comment, response.extract().as(CommentInformation.class));
 		}));
 	}
+	
+	@When("I request to post the following comment")
+	public void i_request_to_post_the_following_comment(String jsonBody) {
+		theActorInTheSpotlight().attemptsTo(
+				SampleAPI.postComment(jsonBody));
+	}
+
+	@Then("I should see the following information in the response")
+	public void i_should_see_the_following_information_in_the_response(CommentInformation comment) {
+		theActorInTheSpotlight().should(
+				seeThatResponse("JSON data is same as the one expected", 
+						response -> response.assertThat()
+						.body("name", equalTo(comment.getName()))
+						.body("email", equalTo(comment.getEmail()))
+						.body("body", equalTo(comment.getBody()))));
+	}
+
+	@Then("I should see id greater than {int} in the response")
+	public void i_should_see_id_greater_than_in_the_response(int number) {
+		theActorInTheSpotlight().should(
+				seeThatResponse("id is greater than {0}", 
+						response -> response.assertThat().body("id", greaterThan(number))));
+	}
+
 }
