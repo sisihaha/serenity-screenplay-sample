@@ -2,8 +2,10 @@
 Feature: Sample for RESTful API
   Fake Online REST API for testing: https://jsonplaceholder.typicode.com/
 
-  Scenario: Get todo item
+  Background: 
     Given I am API consumer
+
+  Scenario: Get todo item
     When I request to get 1st todo item
     Then I should see response JSON data conforms to JSON schema
       """
@@ -24,3 +26,9 @@ Feature: Sample for RESTful API
       	}
       }
       """
+
+  Scenario: Get comment
+    When I request to get 1st comment posted
+    Then I should see the following comment information
+      | PostId | Id | Name                         | Email              | Body                                                                                                                                                    |
+      |      1 |  1 | id labore ex et quam laborum | Eliseo@gardner.biz | laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium |

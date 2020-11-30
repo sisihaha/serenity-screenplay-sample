@@ -10,4 +10,10 @@ public class SampleAPI {
         return Task.where("Get todo with id {0}",
                 Get.resource(endpoint));
     }
+    
+    public static Task getComment(String id) {
+    	String endpoint = "/comments/" + id;
+        return Task.where("Get comment with id {0}",
+                Get.resource(endpoint));
+    }
 }
