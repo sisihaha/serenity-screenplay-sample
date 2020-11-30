@@ -28,7 +28,8 @@ public class AddTodoStepDefinition {
 	}
 	@Then("there should be the following items in todo list for {string}")
 	public void there_should_be_the_following_items_in_todo_list_for(String actorName, List<String> todoList) {
-		theActorInTheSpotlight().should(seeThat(TodoItems.displayed(), equalTo(todoList)));
+		theActorInTheSpotlight().should(
+				seeThat(TodoItems.displayed(), equalTo(todoList)));
 	}
 
 	@Given("{string} has a todo list containing the following items")
