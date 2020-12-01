@@ -33,7 +33,7 @@ public class APISampleStepDefinition {
 	public void i_should_see_response_json_data_conforms_to_json_schema(String jsonSchema) {
 		theActorInTheSpotlight().should(
 				seeThatResponse("JSON data conforms to JSON schema",
-						response -> response.body(matchesJsonSchema(jsonSchema))));
+						response -> response.statusCode(200).body(matchesJsonSchema(jsonSchema))));
 	}
 	
 	@When("I request to get 1st comment posted")
@@ -45,7 +45,7 @@ public class APISampleStepDefinition {
 	@Then("I should see the following comment information")
 	public void i_should_see_the_following_comment_information(CommentInformation comment) {
 		theActorInTheSpotlight().should(seeThatResponse("JSON data is same as the one expected", response -> {
-			Assert.assertEquals(comment, response.extract().as(CommentInformation.class));
+			Assert.assertEquals(comment, response.statusCode(200).extract().as(CommentInformation.class));
 		}));
 	}
 	
@@ -59,7 +59,7 @@ public class APISampleStepDefinition {
 	public void i_should_see_the_following_information_in_the_response(CommentInformation comment) {
 		theActorInTheSpotlight().should(
 				seeThatResponse("JSON data is same as the one expected", 
-						response -> response.assertThat()
+						response -> response.statusCode(201).assertThat()
 						.body("name", equalTo(comment.getName()))
 						.body("email", equalTo(comment.getEmail()))
 						.body("body", equalTo(comment.getBody()))));
